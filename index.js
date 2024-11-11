@@ -14,7 +14,7 @@ app.get("/posts", (req, res) => {
    res.send(posts);
 });
 
-app.post("/posts", async (req, res) => {
+app.post("/posts/create", async (req, res) => {
    console.log('received post')
    const id = randomBytes(4).toString("hex");
    const { title } = req.body;
@@ -25,7 +25,7 @@ app.post("/posts", async (req, res) => {
    };
 
    try {
-      await axios.post("http://localhost:4005/events", {
+      await axios.post("http://event-bus-srv:4005/events", {
          type: "PostCreated",
          data: {
             id,
@@ -48,5 +48,6 @@ app.post("/events", (req, res) => {
 const port = 4000;
 
 app.listen(port, () => {
+   console.log('v50')
    console.log(`Listening on port ${port}`);
 });
